@@ -12,7 +12,12 @@ dotenv.config();
 connectDb();
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://your-frontend.vercel.app"], // whitelist frontend
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // ✅ session middleware
