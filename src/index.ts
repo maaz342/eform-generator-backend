@@ -13,30 +13,25 @@ connectDb();
 
 const app = express();
 
-// ✅ CORS setup (works for localhost + Vercel)
-const allowedOrigins = [
-  "http://localhost:3000",                // local React dev
-  "https://your-frontend.vercel.app",     // deployed React app (replace with actual)
-];
+// ✅ CORS setup (localhost only for now)
+const allowedOrigin = "http://localhost:3000";
 
-// ✅ CORS setup
 app.use(
   cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: allowedOrigin,
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
-// ✅ FIX: Preflight handler
-//app.options("/*", cors());  // <-- changed this
+// ✅ Handle preflight OPTIONS globally
+app.options("*", cors({
+  origin: allowedOrigin,
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 
 // ✅ Body parser
 app.use(express.json());
