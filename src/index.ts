@@ -13,7 +13,6 @@ connectDb();
 
 const app = express();
 
-// ✅ CORS setup (localhost only for now)
 const allowedOrigin = "http://localhost:3000";
 
 app.use(
@@ -25,18 +24,15 @@ app.use(
   })
 );
 
-// ✅ Handle preflight OPTIONS globally
-app.options("*", cors({
+/* app.options("*", cors({
   origin: allowedOrigin,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
-}));
+})); */
 
-// ✅ Body parser
 app.use(express.json());
 
-// ✅ Session middleware
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "supersecret",
@@ -50,20 +46,16 @@ app.use(
   })
 );
 
-// ✅ Passport middleware
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ✅ Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
 
-// ✅ Health check
 app.get("/", (req, res) => {
   res.send("🚀 Backend running successfully");
 });
 
-// ✅ Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

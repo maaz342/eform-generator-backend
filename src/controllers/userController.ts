@@ -13,7 +13,6 @@ export const getProfile = async (req: Request & { user?: any }, res: Response) =
   }
 };
 
-// 📌 Update Profile
 export const updateProfile = async (req: Request & { user?: any }, res: Response) => {
   try {
     if (!req.user) return res.status(401).json({ msg: "Unauthorized" });

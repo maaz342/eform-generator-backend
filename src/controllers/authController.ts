@@ -9,7 +9,6 @@ const generateToken = (id: string, isAdmin: boolean) => {
   });
 };
 
-// 📌 Register
 export const register = async (req: Request, res: Response) => {
   try {
     const { firstName, lastName, email, password } = req.body;
@@ -36,7 +35,6 @@ export const register = async (req: Request, res: Response) => {
   }
 };
 
-// 📌 Login
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -56,4 +54,3 @@ export const login = async (req: Request, res: Response) => {
     res.status(500).json({ msg: "Server error" });
   }
 };
-// 📌 Get Profile

@@ -8,7 +8,6 @@ const router = Router();
 router.post("/register", register);
 router.post("/login", login);
 
-// 📌 Google OAuth
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 
 router.get(
@@ -21,7 +20,6 @@ router.get(
       { expiresIn: "7d" }
     );
 
-    // Redirect with token to frontend
     res.redirect(`http://localhost:3000/google-success?token=${token}`);
   }
 );
